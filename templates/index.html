@@ -6,16 +6,57 @@
     <title>Previsão do Tempo</title>
 </head>
 <body>
-    <h1>Obtenha a Previsão do Tempo</h1>
-    
-    <form action="/previsao" method="POST">
-        <label for="cidade">Digite o nome da cidade:</label>
-        <input type="text" id="cidade" name="cidade" required>
-        <button type="submit">Consultar</button>
+    <h1>Previsão do Tempo</h1>
+
+    <form method="POST">
+        <label for="city">Digite o nome da cidade:</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit">Buscar</button>
     </form>
 
-    {% if erro %}
-        <p style="color: red;">{{ erro }}</p>
+    {% if weather %}
+        <h2>Clima Atual em {{ weather.name }}</h2>
+        <p>Temperatura: {{ weather.main.temp }} °C</p>
+        <p>Descrição: {{ weather.weather[0].description }}</p>
+        <p>Humidade: {{ weather.main.humidity }}%</p>
+
+        <h2>Qualidade do Ar</h2>
+        <p>Índice de Qualidade do Ar: {{ air_quality.list[0].main.aqi }}</p>
+
+        <h2>Previsão para os Próximos 5 Dias</h2>
+        {% for item in forecast.list %}
+            <p><strong>{{ item.dt_txt }}:</strong> {{ item.main.temp }} °C, {{ item.weather[0].description }}</p>
+        {% endfor %}
+    {% endif %}
+    <h1>Dados Climáticos Mensais</h1>
+
+    <form method="POST">
+        <label for="city">Digite o nome da cidade:</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if weather %}
+        <h2>Clima Atual em {{ weather.name }}</h2>
+        <p>Temperatura: {{ weather.main.temp }} °C</p>
+        <p>Descrição: {{ weather.weather[0].description }}</p>
+
+        <h2>Dados Climáticos dos Últimos 30 Dias</h2>
+        <table border="1">
+            <tr>
+                <th>Data</th>
+                <th>Temperatura</th>
+                <th>Humidade</th>
+                <th>Descrição</th>
+            </tr>
+            {% for day in monthly_weather %}
+            <tr>
+                <td>{{ day.temp }} °C</td>
+                <td>{{ day.humidity }}%</td>
+                <td>{{ day.weather[0].description }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     {% endif %}
 </body>
 </html>
