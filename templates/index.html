@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsão do Tempo</title>
+</head>
+<body>
+    <h1>Obtenha a Previsão do Tempo</h1>
+    
+    <form action="/previsao" method="POST">
+        <label for="cidade">Digite o nome da cidade:</label>
+        <input type="text" id="cidade" name="cidade" required>
+        <button type="submit">Consultar</button>
+    </form>
+
+    {% if erro %}
+        <p style="color: red;">{{ erro }}</p>
+    {% endif %}
+</body>
+</html>
